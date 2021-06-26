@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { useState } from 'react'
 import styles from 'src/styles/Home.module.css'
 
@@ -19,27 +18,25 @@ export default function Home() {
         <div className={styles.grid}>
          <div>
            <input />
-           <button>Enter</button>
+           <button className={styles.enterButton}>Enter</button>
          </div>
 
-        <div>
-          
-        </div>
+         <div className={styles.toDoList}>
+           <div className={styles.toDoItem}>
+              <input type="checkbox" />
+              <p className={styles.toDoTask}>xxxxxxx</p>
+              <button className={styles.deleteButton}>-</button>
+           </div>
+           <div className={styles.toDoItem}>
+              <input type="checkbox" />
+              <p className={styles.toDoTask}>xxxxxxx</p>
+              <button className={styles.deleteButton}>-</button>
+           </div>
+         </div>
+
         </div>
       </main>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }
