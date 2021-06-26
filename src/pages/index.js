@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import styles from 'src/styles/Home.module.css'
+import {TodoItem} from "src/components/TodoItem/index"
 
 export default function Home() {
   const [input, setInput] = useState("");
@@ -22,16 +23,7 @@ export default function Home() {
          </div>
 
          <div className={styles.toDoList}>
-           <div className={styles.toDoItem}>
-              <input type="checkbox" />
-              <p className={styles.toDoTask}>xxxxxxx</p>
-              <button className={styles.deleteButton}>-</button>
-           </div>
-           <div className={styles.toDoItem}>
-              <input type="checkbox" />
-              <p className={styles.toDoTask}>xxxxxxx</p>
-              <button className={styles.deleteButton}>-</button>
-           </div>
+           <TodoItem />
          </div>
 
         </div>
