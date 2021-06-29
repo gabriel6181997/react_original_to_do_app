@@ -1,27 +1,55 @@
 import Head from "next/head";
-import { useCallback, useState } from "react";
+import { nanoid } from "nanoid";
+import { useCallback, useEffect, useState } from "react";
 import styles from "src/styles/Home.module.css";
 import { TodoItem } from "src/components/TodoItem/index";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
-  const [array, setArray] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   const handleChange = useCallback((e) => {
     setTodoText(e.target.value.trim());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const getTodoList = useCallback(async () => {
+    const res = await fetch("http://localhost:3001/todoList");
+    const json = await res.json();
+    setTasks(json);
+  }, []);
+
+  useEffect(() => {
+    getTodoList();
+  }, [getTodoList]);
+
   const handleAddTask = useCallback(() => {
-    setArray((preArray) => {
-      if(todoText === "") {
+    setTasks((preTasks) => {
+      if (todoText === "") {
         alert("必ず何かを入力してください！");
-        return preArray;
+        return preTasks;
       }
-      const newArray = [...preArray, todoText];
-      return newArray;
+      const newTask = { id: nanoid(), title: todoText, completed: false };
+      const newTasks = [...preTasks, newTask];
+      return newTasks;
     });
   }, [todoText]);
+
+  const toggleTaskCompleted = (id) => {
+    const updatedTasks = tasks.map((task) => {
+      if(id === task.id) {
+        return{...task, completed: !task.completed}
+      }
+      return task;
+    });
+    setTasks(updatedTasks);
+    console.log(tasks);
+  };
+
+  const deleteTask = (id) => {
+    const remainingTasks = tasks.filter(task => task.id != id)
+    setTasks(remainingTasks)
+  }
 
   return (
     <div className={styles.container}>
@@ -42,8 +70,17 @@ export default function Home() {
           </div>
 
           <ul className={styles.toDoList}>
-            {array.map((item) => {
-              return <TodoItem key={item} text={item}/>;
+            {tasks.map((task) => {
+              return (
+                <TodoItem
+                  id={task.id}
+                  key={task.id}
+                  title={task.title}
+                  completed={task.completed}
+                  toggleTaskCompleted={toggleTaskCompleted}
+                  deleteTask={deleteTask}
+                />
+              );
             })}
           </ul>
         </div>
