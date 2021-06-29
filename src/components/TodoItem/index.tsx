@@ -1,6 +1,15 @@
+import { VFC } from "react";
 import styles from "src/components/TodoItem/index.module.css";
 
-export const TodoItem = (props) => {
+type Props = {
+  id:  string;
+  title: string;
+  completed: boolean;
+  toggleTaskCompleted: (id: string) => void;
+  deleteTask: (id: string) => void;
+}
+
+export const TodoItem:VFC<Props> = (props) => {
 
   return (
     <li className={styles.toDoItem}>

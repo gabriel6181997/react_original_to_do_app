@@ -1,6 +1,13 @@
+import { Dispatch, SetStateAction, VFC } from "react";
 import styles from "src/components/FilterButton/index.module.css";
 
-export const FilterButton = (props) => {
+type Props = {
+  name: string;
+  isPressed: boolean;
+  setFilter: Dispatch<SetStateAction<string>>
+}
+
+export const FilterButton: VFC<Props> = (props) => {
   return (
     <button
       type="button"
