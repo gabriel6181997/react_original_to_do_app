@@ -6,7 +6,7 @@ import { TodoItem } from "src/components/TodoItem/index";
 import { FilterButton } from "src/components/FilterButton/index";
 import { FILTERINFOS } from "src/util/filterInfo";
 
-export default function Home() {
+const Home = () => {
   const [todoText, setTodoText] = useState("");
   const [tasks, setTasks] = useState([]);
   const [filter, setFilter] = useState("All");
@@ -47,10 +47,10 @@ export default function Home() {
       return task;
     });
     setTasks(updatedTasks);
-    console.log(tasks);
   };
 
   const deleteTask = (id) => {
+    console.log(id);
     const remainingTasks = tasks.filter((task) => task.id != id);
     setTasks(remainingTasks);
   };
@@ -105,3 +105,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;
