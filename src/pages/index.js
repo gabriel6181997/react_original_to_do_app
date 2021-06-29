@@ -1,10 +1,27 @@
-import Head from 'next/head'
-import { useState } from 'react'
-import styles from 'src/styles/Home.module.css'
-import {TodoItem} from "src/components/TodoItem/index"
+import Head from "next/head";
+import { useCallback, useState } from "react";
+import styles from "src/styles/Home.module.css";
+import { TodoItem } from "src/components/TodoItem/index";
 
 export default function Home() {
-  const [input, setInput] = useState("");
+  const [todoText, setTodoText] = useState("");
+  const [array, setArray] = useState([]);
+
+  const handleChange = useCallback((e) => {
+    setTodoText(e.target.value.trim());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleAddTask = useCallback(() => {
+    setArray((preArray) => {
+      if(todoText === "") {
+        alert("必ず何かを入力してください！");
+        return preArray;
+      }
+      const newArray = [...preArray, todoText];
+      return newArray;
+    });
+  }, [todoText]);
 
   return (
     <div className={styles.container}>
@@ -17,18 +34,20 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>To-do App</h1>
         <div className={styles.grid}>
-         <div>
-           <input />
-           <button className={styles.enterButton}>Enter</button>
-         </div>
+          <div>
+            <input value={todoText} onChange={handleChange} />
+            <button className={styles.enterButton} onClick={handleAddTask}>
+              Enter
+            </button>
+          </div>
 
-         <div className={styles.toDoList}>
-           <TodoItem />
-         </div>
-
+          <ul className={styles.toDoList}>
+            {array.map((item) => {
+              return <TodoItem key={item} text={item}/>;
+            })}
+          </ul>
         </div>
       </main>
-
     </div>
-  )
+  );
 }
