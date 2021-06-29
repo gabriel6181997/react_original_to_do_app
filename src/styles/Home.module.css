@@ -16,13 +16,12 @@
   margin-top: 1rem;
 }
 
-.logo {
-  height: 1em;
-  margin-left: 0.5rem;
-}
-
 .enterButton{
   margin-left: 10px;
+}
+
+.buttons{
+  margin: 15px 0;
 }
 
 .toDoList{
