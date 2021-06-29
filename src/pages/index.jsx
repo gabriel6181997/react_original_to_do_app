@@ -3,10 +3,13 @@ import { nanoid } from "nanoid";
 import { useCallback, useEffect, useState } from "react";
 import styles from "src/styles/Home.module.css";
 import { TodoItem } from "src/components/TodoItem/index";
+import { FilterButton } from "src/components/FilterButton/index";
+import { FILTERINFOS } from "src/util/filterInfo";
 
 export default function Home() {
   const [todoText, setTodoText] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("All");
 
   const handleChange = useCallback((e) => {
     setTodoText(e.target.value.trim());
@@ -37,8 +40,8 @@ export default function Home() {
 
   const toggleTaskCompleted = (id) => {
     const updatedTasks = tasks.map((task) => {
-      if(id === task.id) {
-        return{...task, completed: !task.completed}
+      if (id === task.id) {
+        return { ...task, completed: !task.completed };
       }
       return task;
     });
@@ -47,9 +50,9 @@ export default function Home() {
   };
 
   const deleteTask = (id) => {
-    const remainingTasks = tasks.filter(task => task.id != id)
-    setTasks(remainingTasks)
-  }
+    const remainingTasks = tasks.filter((task) => task.id != id);
+    setTasks(remainingTasks);
+  };
 
   return (
     <div className={styles.container}>
@@ -69,8 +72,21 @@ export default function Home() {
             </button>
           </div>
 
+          <div className={styles.buttons}>
+            {Object.keys(FILTERINFOS).map((name) => {
+              return (
+                <FilterButton
+                  key={name}
+                  name={name}
+                  isPressed={name === filter}
+                  setFilter={setFilter}
+                />
+              );
+            })}
+          </div>
+
           <ul className={styles.toDoList}>
-            {tasks.map((task) => {
+            {tasks.filter(FILTERINFOS[filter]).map((task) => {
               return (
                 <TodoItem
                   id={task.id}
