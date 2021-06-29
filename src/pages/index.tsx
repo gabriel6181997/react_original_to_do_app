@@ -5,10 +5,11 @@ import styles from "src/styles/Home.module.css";
 import { TodoItem } from "src/components/TodoItem/index";
 import { FilterButton } from "src/components/FilterButton/index";
 import { FILTERINFOS } from "src/util/filterInfo";
+import { Task } from "src/util/type";
 
 const Home = () => {
   const [todoText, setTodoText] = useState("");
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [filter, setFilter] = useState("All");
 
   const handleChange = useCallback((e) => {
@@ -39,7 +40,7 @@ const Home = () => {
     setTodoText("");
   }, [todoText]);
 
-  const toggleTaskCompleted = (id) => {
+  const toggleTaskCompleted = (id: string) => {
     const updatedTasks = tasks.map((task) => {
       if (id === task.id) {
         return { ...task, completed: !task.completed };
@@ -49,7 +50,7 @@ const Home = () => {
     setTasks(updatedTasks);
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = (id: string) => {
     console.log(id);
     const remainingTasks = tasks.filter((task) => task.id != id);
     setTasks(remainingTasks);
