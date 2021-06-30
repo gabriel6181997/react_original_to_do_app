@@ -51,7 +51,6 @@ const Home = () => {
   };
 
   const deleteTask = (id: string) => {
-    console.log(id);
     const remainingTasks = tasks.filter((task) => task.id != id);
     setTasks(remainingTasks);
   };
@@ -88,23 +87,27 @@ const Home = () => {
           </div>
 
           <ul className={styles.toDoList}>
-            {tasks.filter(FILTERINFOS[filter]).map((task) => {
-              return (
-                <TodoItem
-                  id={task.id}
-                  key={task.id}
-                  title={task.title}
-                  completed={task.completed}
-                  toggleTaskCompleted={toggleTaskCompleted}
-                  deleteTask={deleteTask}
-                />
-              );
-            })}
+            {tasks.length > 0 ? (
+              tasks.filter(FILTERINFOS[filter]).map((task) => {
+                return (
+                  <TodoItem
+                    id={task.id}
+                    key={task.id}
+                    title={task.title}
+                    completed={task.completed}
+                    toggleTaskCompleted={toggleTaskCompleted}
+                    deleteTask={deleteTask}
+                  />
+                );
+              })
+            ) : (
+              <p>Failed get data from API</p>
+            )}
           </ul>
         </div>
       </main>
     </div>
   );
-}
+};
 
 export default Home;
