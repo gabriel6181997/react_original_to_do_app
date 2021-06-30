@@ -5,12 +5,12 @@ import styles from "src/styles/Home.module.css";
 import { TodoItem } from "src/components/TodoItem/index";
 import { FilterButton } from "src/components/FilterButton/index";
 import { FILTERINFOS } from "src/util/filterInfo";
-import { Task } from "src/util/type";
+import { filter, Task } from "src/util/type";
 
 const Home = () => {
   const [todoText, setTodoText] = useState("");
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [filter, setFilter] = useState("All");
+  const [filter, setFilter] = useState<filter>("All");
 
   const handleChange = useCallback((e) => {
     setTodoText(e.target.value.trim());
@@ -78,7 +78,7 @@ const Home = () => {
               return (
                 <FilterButton
                   key={name}
-                  name={name}
+                  name={name as filter}
                   isPressed={name === filter}
                   setFilter={setFilter}
                 />
